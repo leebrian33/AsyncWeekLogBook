@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
-const database = require('./database');
+const db = require('./database');
 
-const Students = database.define('student', {
+module.exports = db.define('student', {
     //firstName
     firstName: {
         type: Sequelize.STRING,
@@ -43,8 +43,6 @@ const Students = database.define('student', {
     //gpa
     gpa: {
         type: Sequelize.DECIMAL(2,1),
-        //not null
-        allowNull: false,
         validate: {
         //upper bound
         max: 4.0,
@@ -56,4 +54,3 @@ const Students = database.define('student', {
     },
     });
 
-module.exports = Students;

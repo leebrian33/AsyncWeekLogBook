@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
-const database = require('./database');
+const db = require('./database');
 
-const Campuses = database.define('campus', {
+module.exports = db.define('campus', {
     //name
     name: {
         type: Sequelize.STRING,
@@ -16,7 +16,7 @@ const Campuses = database.define('campus', {
     imageUrl: {
         type: Sequelize.STRING,
         //defaultValue is alma mater
-        defaultValue: 'https://www.rochester.edu/assets/images/2007-10-31_Rush_Rhees_Library_10152.jpg'
+        defaultValue: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSz6Xey8GsoLJn4Fv55iws4C25i-zANlYNLMg&usqp=CAU'
     },
     //address
     address: {
@@ -34,4 +34,4 @@ const Campuses = database.define('campus', {
         type: Sequelize.TEXT,
     },
     });
-module.exports = Campuses;
+// module.exports = Campuses;

@@ -8,7 +8,8 @@ import thunkMiddleware from "redux-thunk";
 import waitForExpect from "wait-for-expect";
 import { Provider } from "react-redux";
 import * as rrd from "react-router-dom";
-
+const app = require("../../server");
+const agent = require("supertest")(app);
 const { MemoryRouter } = rrd;
 
 const middlewares = [thunkMiddleware];
@@ -261,9 +262,21 @@ describe("Tier One: Students", () => {
     afterEach(() => {
       Student.findAll = studentFindAll;
     });
-
-    xit("*** GET /api/students responds with all students", async () => {
-      throw new Error("replace this error with your own test");
+    it("GET /api/students responds with all students", async () => {
+      const response = await agent.get("/api/students").expect(200);
+      expect(response.body).to.deep.equal([
+        {
+          id: 1,
+          firstName: "Mae",
+          lastName: "Jemison"
+        },
+        {
+          id: 2,
+          firstName: "Sally",
+          lastName: "Ride"
+        }
+      ]);
+      expect(Student.findAll.calledOnce).to.be.equal(true);
     });
   });
 
@@ -271,7 +284,7 @@ describe("Tier One: Students", () => {
     before(() => db.sync({ force: true }));
     afterEach(() => db.sync({ force: true }));
 
-    xit("has fields firstName, lastName, email, imageUrl, gpa", async () => {
+    it("has fields firstName, lastName, email, imageUrl, gpa", async () => {
       const student = await Student.create({
         firstName: "Sally",
         lastName: "Ride",
@@ -286,7 +299,7 @@ describe("Tier One: Students", () => {
       expect(parseFloat(student.gpa)).to.equal(3.8);
     });
 
-    xit("requires firstName, lastName, email", async () => {
+    it("requires firstName, lastName, email", async () => {
       const student = Student.build();
       try {
         await student.validate();
@@ -300,7 +313,7 @@ describe("Tier One: Students", () => {
       }
     });
 
-    xit("firstName, lastName, email cannot be empty", async () => {
+    it("firstName, lastName, email cannot be empty", async () => {
       const student = Student.build({
         firstName: "",
         lastName: "",
@@ -318,11 +331,19 @@ describe("Tier One: Students", () => {
       }
     });
 
-    xit("*** email must be a valid email", async () => {
-      throw new Error("replace this error with your own test");
+    it("email must be a valid email", async () => {
+      const student = await Student.create({
+        firstName: "Sally",
+        lastName: "Ride",
+        email: "sallyride@nasa.gov",
+        imageUrl: "/images/sallyride.png",
+        gpa: 3.8
+      });
+      expect(student.email).to.equal("sallyride@nasa.gov");
+      
     });
 
-    xit("gpa must be a float between 0.0 and 4.0", async () => {
+    it("gpa must be a float between 0.0 and 4.0", async () => {
       const student = {
         firstName: "Sally",
         lastName: "Ride",
@@ -346,7 +367,7 @@ describe("Tier One: Students", () => {
       }
     });
 
-    xit("default imageUrl if left blank", () => {
+    it("default imageUrl if left blank", () => {
       const student = Student.build({
         firstName: "",
         lastName: "",
@@ -359,7 +380,7 @@ describe("Tier One: Students", () => {
   describe("Seed file", () => {
     beforeEach(seed);
 
-    xit("populates the database with at least four students", async () => {
+    it("populates the database with at least four students", async () => {
       const seededStudents = await Student.findAll();
       expect(seededStudents).to.have.lengthOf.at.least(4);
     });

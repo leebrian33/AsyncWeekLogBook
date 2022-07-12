@@ -6,7 +6,7 @@ router.get('/', async (req, res, next) => {
   try {
     const students = await Student.findAll()
     //res.json/res.send?
-    res.json(students)
+    res.send(students)
   }
   catch (error) {
     next(error)

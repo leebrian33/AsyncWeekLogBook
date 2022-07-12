@@ -280,7 +280,7 @@ describe("Tier One: Campuses", () => {
 
     // Consider writing your GET route in server/api/campuses.js. And don't
     // forget to apply the express router to your API in server/api/index.js!
-    xit("GET /api/campuses responds with all campuses", async () => {
+    it("GET /api/campuses responds with all campuses", async () => {
       const response = await agent.get("/api/campuses").expect(200);
       expect(response.body).to.deep.equal([
         {
@@ -302,7 +302,7 @@ describe("Tier One: Campuses", () => {
     before(() => db.sync({ force: true }));
     afterEach(() => db.sync({ force: true }));
 
-    xit("has fields name, address, imageUrl, description", async () => {
+    it("has fields name, address, imageUrl, description", async () => {
       const campus = await Campus.create({
         name: "Jupiter Jumpstart",
         address: "5.2 AU",
@@ -318,11 +318,21 @@ describe("Tier One: Campuses", () => {
       );
     });
 
-    xit("*** requires name and address", async () => {
-      throw new Error("replace this error with your own test");
+    it("requires name and address", async () => {
+      const campus = await Campus.create({
+        name: "Jupiter Jumpstart",
+        address: "5.2 AU",
+        imageUrl: "/images/jupiter.png",
+        description:
+          "The best JavaScript Academy for toddlers in the solar system!"
+      });
+      expect(campus.name).to.equal("Jupiter Jumpstart");
+      expect(campus.address).to.equal("5.2 AU");
+      expect(campus.imageUrl).to.be.a("string");
+      expect(campus.imageUrl.length).to.be.greaterThan(1);
     });
 
-    xit("name and address cannot be empty", async () => {
+    it("name and address cannot be empty", async () => {
       const campus = Campus.build({ name: "", address: "" });
       try {
         await campus.validate();
@@ -335,7 +345,7 @@ describe("Tier One: Campuses", () => {
       }
     });
 
-    xit("default imageUrl if left blank", async () => {
+    it("default imageUrl if left blank", async () => {
       const campus = Campus.build({
         name: "Jupiter Jumpstart",
         address: "5.2 AU"
@@ -349,7 +359,7 @@ describe("Tier One: Campuses", () => {
   describe("Seed file", () => {
     beforeEach(seed);
 
-    xit("populates the database with at least three campuses", async () => {
+    it("populates the database with at least three campuses", async () => {
       const seededCampuses = await Campus.findAll();
       expect(seededCampuses).to.have.lengthOf.at.least(3);
     });
