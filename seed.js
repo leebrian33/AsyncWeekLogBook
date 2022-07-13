@@ -8,36 +8,7 @@ const seed = async () => {
   try {
     // seed your database here!
     await db.sync({ force: true });
-    
-    const brian = await Student.create({
-      firstName: 'Brian',
-      lastName: 'Lee',
-      email: 'brianlee@email.com', 
-      imageUrl: 'https://static.wikia.nocookie.net/enfuturama/images/d/da/Fry_Looking_Squint.jpg/revision/latest/scale-to-width-down/250?cb=20110701192358',
-      gpa: 3.5
-    })
-    const michael = await Student.create({
-      firstName: 'Micahel',
-      lastName: 'Lawrie',
-      email: 'michaellawrie@email.com', 
-      imageUrl: 'https://cdn.vox-cdn.com/thumbor/HOWiq29vUhGGTVTcjNqMA7refT4=/1400x1400/filters:format(jpeg)/cdn.vox-cdn.com/uploads/chorus_asset/file/23249598/mgid_arc_imageassetref_comedycentral.jpeg',
-      gpa: 3.6
-    })
-    const sam = await Student.create({
-      firstName: 'Sam',
-      lastName: 'Pomerantz',
-      email: 'SamPomerantz@email.com', 
-      imageUrl: 'https://static.wikia.nocookie.net/enfuturama/images/4/46/Crimes_of_the_Hot_%28Main_Episode%29_-_87.png/revision/latest/scale-to-width-down/1200?cb=20211005090155',
-      gpa: 3.7
-    })
 
-    const kathryn = await Student.create({
-      firstName: 'Kathryn',
-      lastName: 'LaBine',
-      email: 'kathrynlabine@email.com', 
-      imageUrl: 'https://i.ebayimg.com/images/g/JO0AAOSw2RdeKCea/s-l500.png',
-      gpa: 3.8
-    })
 
     const campus1 = await Campus.create({
       name: 'Rochester Institute of Technology',
@@ -59,6 +30,42 @@ const seed = async () => {
       address: '500 Joseph C. Wilson Blvd. Rochester, NY 14627',
       description: 'The University of Rochester is a private research university in Rochester, New York. The university grants undergraduate and graduate degrees, including doctoral and professional degrees. The University of Rochester enrolls approximately 6,800 undergraduates and 5,000 graduate students.'
     })
+
+    const brian = await Student.create({
+      
+      firstName: 'Brian',
+      lastName: 'Lee',
+      email: 'brianlee@email.com', 
+      imageUrl: 'https://i.kym-cdn.com/entries/icons/mobile/000/006/026/NOTSUREIF.jpg',
+      gpa: 3.5,
+      campusId: 1
+    })
+    const michael = await Student.create({
+      campusId: 2,
+      firstName: 'Micahel',
+      lastName: 'Lawrie',
+      email: 'michaellawrie@email.com', 
+      imageUrl: 'https://cdn.vox-cdn.com/thumbor/HOWiq29vUhGGTVTcjNqMA7refT4=/1400x1400/filters:format(jpeg)/cdn.vox-cdn.com/uploads/chorus_asset/file/23249598/mgid_arc_imageassetref_comedycentral.jpeg',
+      gpa: 3.6
+    })
+    const sam = await Student.create({
+      campusId: 2,
+      firstName: 'Sam',
+      lastName: 'Pomerantz',
+      email: 'Sampomerantz@email.com', 
+      imageUrl: 'https://i.pinimg.com/564x/bb/d8/80/bbd880b7b9d475469df1ae9b693a41c0.jpg',
+      gpa: 3.7
+    })
+
+    const kathryn = await Student.create({
+      firstName: 'Kathryn',
+      lastName: 'LaBine',
+      email: 'kathrynlabine@email.com', 
+      imageUrl: 'https://i.ebayimg.com/images/g/JO0AAOSw2RdeKCea/s-l500.png',
+      gpa: 3.8
+    })
+
+    
     
   } catch (err) {
     console.log(red(err));

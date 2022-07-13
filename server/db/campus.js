@@ -14,7 +14,7 @@ module.exports = db.define('campus', {
     },
     //image
     imageUrl: {
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT,
         //defaultValue is alma mater
         defaultValue: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSz6Xey8GsoLJn4Fv55iws4C25i-zANlYNLMg&usqp=CAU'
     },
@@ -34,4 +34,4 @@ module.exports = db.define('campus', {
         type: Sequelize.TEXT,
     },
     });
-// module.exports = Campuses;
+

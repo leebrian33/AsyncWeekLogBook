@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const {Campus} = require('../db')
+const { Student } = require("../db");
 
 // GET /api/campuses
 router.get('/', async (req, res, next) => {
@@ -12,5 +13,22 @@ router.get('/', async (req, res, next) => {
     next(error)
   }
 });
+
+// GET /api/campuses/:campusId
+router.get('/:campusId', async (req, res, next) => {
+  try {
+    const campus = await Campus.findAll({
+      where: {
+        id: req.params.campusId
+      },
+      include: Student 
+    })
+    res.send(campus)
+  }
+  catch (error) {
+    next(error)
+  }
+})
+
 
 module.exports = router

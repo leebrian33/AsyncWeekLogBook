@@ -137,14 +137,14 @@ describe("Tier One: Students", () => {
     });
 
     describe("set/fetch students", () => {
-      xit("setStudents action creator returns a valid action", () => {
+      it("setStudents action creator returns a valid action", () => {
         expect(setStudents(students)).to.deep.equal({
           type: "SET_STUDENTS",
           students
         });
       });
 
-      xit("fetchStudents thunk creator returns a thunk that GETs /api/students", async () => {
+      it("fetchStudents thunk creator returns a thunk that GETs /api/students", async () => {
         await fakeStore.dispatch(fetchStudents());
         const [getRequest] = mockAxios.history.get;
         expect(getRequest).to.not.equal(undefined);
@@ -165,7 +165,7 @@ describe("Tier One: Students", () => {
         throw new Error("replace this error with your own test");
       });
 
-      xit("reduces on SET_STUDENTS action", () => {
+      it("reduces on SET_STUDENTS action", () => {
         const action = {
           type: "SET_STUDENTS",
           students
@@ -203,7 +203,7 @@ describe("Tier One: Students", () => {
 
     // This test is expecting your component to render the students from the
     // Redux store. Now's a good time for a mapState.
-    xit("<AllStudents /> renders students from the Redux store", async () => {
+    it("<AllStudents /> renders students from the Redux store", async () => {
       const wrapper = mount(
         <Provider store={store}>
           <MemoryRouter initialEntries={["/students"]}>
