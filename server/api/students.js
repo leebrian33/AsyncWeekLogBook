@@ -21,15 +21,19 @@ router.get("/:studentId", async (req, res, next) => {
         id: req.params.studentId
       },
       include: Campus
-      // ,{
-      //   where:{
-      //     id: campusId,
-      //   }
-      // }
     })
     res.send(student);
   } catch (error) {
     next(error);
+  }
+});
+
+//POST to create a new students
+router.post('/', async (req, res, next) => {
+  try {
+    res.status(201).send(await Student.create(req.body));
+  } catch (error) {
+    next(error); 
   }
 });
 

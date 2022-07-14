@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { fetchStudents } from "../redux/students";
 import { Route, Link } from "react-router-dom";
+import AddStudent from './AddStudent'
 
 // Notice that we're exporting the AllStudents component twice. The named export
 // (below) is not connected to Redux, while the default export (at the very
@@ -12,6 +13,15 @@ export class AllStudents extends React.Component {
   }
 
   componentDidMount() {
+    try {
+      this.props.load();
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  componentDidUpdate(prevProps){
+    if (prevProps.students.id !== this.props.students.id) 
     try {
       this.props.load();
     } catch (error) {
@@ -50,6 +60,7 @@ export class AllStudents extends React.Component {
             })}
         </tbody>
       </table>
+      <AddStudent/>
     </div>);
   }
 }
