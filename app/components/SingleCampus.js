@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import { Route, Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { fetchStudents } from "../redux/students";
+import EditCampus from './EditCampus';
 
 import { fetchSingleCampus } from "../redux/singleCampus";
+import { unregisterStudent } from '../redux/students'
 
 class SingleCampus extends Component {
   componentDidMount() {
@@ -17,7 +18,7 @@ class SingleCampus extends Component {
 
   render() {
 
-    const OneCampus = this.props.singleCampus; 
+    const OneCampus = this.props.singleCampus ; 
     const persons = this.props.students || [];
     return (
       <div id={OneCampus.id}>
@@ -30,6 +31,7 @@ class SingleCampus extends Component {
             style={{ height: "200px", width: "200px" }}
           />
         </div>
+        <div><EditCampus id={OneCampus.id}/></div>
         
         <div id="students-assigned">
           {persons.length!==0 ? <table>
@@ -70,6 +72,16 @@ class SingleCampus extends Component {
                         />
                       </th>
                       <th>{element.gpa}</th>
+                      {/* TIER 5 UNREGISTER BUTTON */}
+                      <th><button
+                            onClick={(evt) => {
+                              evt.preventDefault();
+                              this.props.stripStudent({...element, campusId:null});
+                            }}
+                          >
+                            UNREGISTER THIS STUDENT
+                          </button></th>
+                      {/* END OF TIER 5 BUTTON */}
                     </tr>
                   );
                 }
@@ -92,7 +104,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     loadSingleCampus: (id) => dispatch(fetchSingleCampus(id)),
-    
+    stripStudent: (student) => dispatch(unregisterStudent(student))
   };
 };
 

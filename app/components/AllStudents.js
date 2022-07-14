@@ -51,12 +51,13 @@ export class AllStudents extends React.Component {
               )} else {
             return (
               <tr key={element.firstName}>
-                <th><RemoveStudent id={element.id}/></th>
+                
                 <th><Link to={`/students/${element.id}`}>{element.firstName}</Link></th>
                 <th><Link to={`/students/${element.id}`}>{element.lastName}</Link></th>
                 <th><Link to={`/students/${element.id}`}>{element.email}</Link></th>
                 <th><img src={element.imageUrl} style={{height:"100px", width: "100px"}} /></th>
                 <th>{element.gpa}</th>
+                <th><RemoveStudent id={element.id}/></th>
               </tr> 
             )}
             })}

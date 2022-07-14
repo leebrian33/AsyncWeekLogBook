@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Route, Link } from "react-router-dom";
 import { connect } from "react-redux";
+import EditStudent from './EditStudent'
 
 import { fetchSingleStudent } from "../redux/singleStudent";
 
@@ -29,6 +30,7 @@ class SingleStudent extends Component {
             style={{ height: "200px", width: "200px" }}
           />
         </div>
+        <div><EditStudent id={OneStudent.id}/></div>
         {!OneCampus.id ? <h3>NOT ATTENDING SCHOOL</h3> : <div id={OneCampus.id}>
           <div id="single-campus">
           <Link to={`/campuses/${OneCampus.id}`}><h1>{OneCampus.name}</h1></Link>

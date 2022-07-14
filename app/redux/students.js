@@ -4,6 +4,8 @@ let initialState = [];
 
 let SET_STUDENTS = "SET_STUDENTS";
 let DELETE_STUDENT = "DELETE_STUDENT";
+let UNREGISTER_STUDENT = "UNREGISTER_STUDENT";
+let UPDATE_STUDENT = "UPDATE_STUDENT"
 
 //ACTION CREATOR: SET ALL STUDENTS
 export const setStudents = (students) => {
@@ -41,6 +43,45 @@ export const deleteStudent = (id) => {
     }
   };
 };
+//ACTION CREATOR: UNREGISTER STUDENT
+export const removeStudentFromCampus = (studentToBeUnregistered) => {
+  return {
+    type: UNREGISTER_STUDENT,
+    studentToBeUnregistered,
+  };
+};
+//THUNK: PUT REQUEST TO NULLIFY CAMPUSID
+export const unregisterStudent = (student) => {
+  return async (dispatch) => {
+    try {
+      let campusIdSpecific = {...student, route: unregister}
+      const { data } = await axios.put(`/api/students/${student.id}`, campusIdSpecific);
+      dispatch(removeStudent(data));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
+//ACTION CREATOR: UPDATE STUDENT INFO
+export const reformStudentInfo = (studentToBeEdited) => {
+  return {
+    type: UPDATE_STUDENT,
+    studentToBeEdited,
+  };
+};
+//THUNK: PUT REQUEST TO UPDATE STUDENT INFO
+export const updateStudent = (student) => {
+  return async (dispatch) => {
+    try {
+      console.log(student)
+      const { data } = await axios.put(`/api/students/${student.id}`, student);
+      dispatch(reformStudentInfo(data));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
+
 //REDUCER
 export default function studentsReducer(state = initialState, action) {
   switch (action.type) {
@@ -50,6 +91,21 @@ export default function studentsReducer(state = initialState, action) {
       return state.filter(
         (student) => student.id !== action.studentToBeDeleted
       );
+    case UNREGISTER_STUDENT:
+      return state.map((student) =>
+        student.id === action.studentToBeUnregistered.id
+          ? action.studentToBeUnregistered
+          : student
+      );
+    case UPDATE_STUDENT:
+    return state.map((student) =>
+      student.id === action.studentToBeEdited.id
+        ? {...action.studentToBeEdited,
+        firstName: action.studentToBeEdited.firstName,
+        lastName: action.studentToBeEdited.lastName,
+        email: action.studentToBeEdited.email,}
+        : student
+    );
     default:
       return state;
   }

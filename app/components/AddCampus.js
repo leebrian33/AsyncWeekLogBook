@@ -22,7 +22,7 @@ class AddCampus extends React.Component {
           type="text"
           value={this.state.name}
           onChange={evt => this.setState({ name: evt.target.value })}
-        //   onKeyDown={this.handleKey}
+      
           style={{ margin: "100px"}}
         />
         <div>ADDRESS:</div>
@@ -30,7 +30,7 @@ class AddCampus extends React.Component {
           type="text"
           value={this.state.address}
           onChange={evt => this.setState({ address: evt.target.value })}
-        //   onKeyDown={this.handleKey}
+       
           style={{ margin: "100px"}}
         />
         <div>DESCRIPTION:</div>
@@ -38,7 +38,7 @@ class AddCampus extends React.Component {
           type="text"
           value={this.state.description}
           onChange={evt => this.setState({ description: evt.target.value })}
-        //   onKeyDown={this.handleKey}
+  
           style={{ margin: "100px"}}
         />
         <button
@@ -55,7 +55,7 @@ class AddCampus extends React.Component {
   }
 }
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     add: (state) => dispatch(createCampus(state)),
   };

@@ -37,7 +37,27 @@ router.post('/', async (req, res, next) => {
   }
 });
 
-//DETELE to remove student
+
+router.put('/:id', async (req, res, next) => {
+  try {
+    if (req.body.route) {
+      // PUT FOR THE SINGLE CAMPUS UNREGISTER BUTTON
+    const student = await Student.findByPk(req.params.id);
+    res.send(await student.update({campusId: req.body.campusId}));
+    } else {
+      // PUT FOR THE UPDATED STUDENT
+    const student = await Student.findByPk(req.params.id);
+    res.send(await student.update({
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      email: req.body.email,
+    }))
+    };
+  } catch (error) {
+    next(error);
+  }
+});
+
 router.delete('/:id', async (req, res, next) => {
   try {
     const student = await Student.findByPk(req.params.id)

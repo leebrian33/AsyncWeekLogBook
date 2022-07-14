@@ -38,7 +38,15 @@ router.post('/', async (req, res, next) => {
     next(error); 
   }
 });
-
+// PUT /api/campuses/:id
+router.put('/:id', async (req, res, next) => {
+  try {
+    const campus = await Campus.findByPk(req.params.id);
+    res.send(await campus.update({name: req.body.name, address:req.body.address}));
+  } catch (error) {
+    next(error);
+  }
+});
 //DETELE to remove campus
 router.delete('/:id', async (req, res, next) => {
   try {
