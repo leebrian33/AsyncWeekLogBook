@@ -18,6 +18,7 @@ The requirements below are broken into separate **tiers**, which model the way w
 
 #### Backend
 
+
 - [x] Write a route to serve up all students
 - [x] Write a route to serve up all campuses
 
@@ -93,8 +94,8 @@ Congrats! You have completed your second vertical slice! Make sure to `commit -m
 
 #### Backend
 
-- [ ] Write a route to add a new campus
-- [ ] Write a route to add a new student
+- [x] Write a route to add a new campus
+- [x] Write a route to add a new student
 
 Congrats! You have completed your third vertical slice! Make sure to `commit -m "Feature: Add Campus and Student"` before moving on (see RUBRIC.md - points are awarded/deducted for a proper git workflow)!
 
@@ -106,21 +107,21 @@ Congrats! You have completed your third vertical slice! Make sure to `commit -m 
 
 #### Frontend
 
-- [ ] In the all-campuses view, include an `X` button next to each campus
+- [x] In the all-campuses view, include an `X` button next to each campus
 - Clicking the `X` button should:
 
-  - [ ] Make an AJAX request that causes that campus to be removed from database
-  - [ ] Remove the campus from the list of campuses without needing to refresh the page
+  - [x] Make an AJAX request that causes that campus to be removed from database
+  - [---] Remove the campus from the list of campuses without needing to refresh the page
 
-- [ ] In the all-students view, include an `X` button next to each student
+- [X] In the all-students view, include an `X` button next to each student
 - Clicking the `X` button should:
-  - [ ] Make an AJAX request that causes that student to be removed from database
-  - [ ] Remove the student from the list of students without needing to refresh the page
+  - [X] Make an AJAX request that causes that student to be removed from database
+  - [---] Remove the student from the list of students without needing to refresh the page
 
 #### Backend
 
-- [ ] Write a route to remove a campus (based on its id)
-- [ ] Write a route to remove a student (based on their id)
+- [X] Write a route to remove a campus (based on its id)
+- [X] Write a route to remove a student (based on their id)
 
 Congrats! You have completed your fourth vertical slice! Make sure to `commit -m "Feature: Remove Campus and Student"` before moving on (see RUBRIC.md - points are awarded/deducted for a proper git workflow)!
 

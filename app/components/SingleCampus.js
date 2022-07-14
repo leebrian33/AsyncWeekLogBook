@@ -16,9 +16,8 @@ class SingleCampus extends Component {
   }
 
   render() {
-    //props are assigned to the single campus
+
     const OneCampus = this.props.singleCampus; 
-    //assign the label to an empty array so it does not run into race condition
     const persons = this.props.students || [];
     return (
       <div id={OneCampus.id}>

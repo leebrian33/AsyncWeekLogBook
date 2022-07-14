@@ -39,5 +39,15 @@ router.post('/', async (req, res, next) => {
   }
 });
 
+//DETELE to remove campus
+router.delete('/:id', async (req, res, next) => {
+  try {
+    const campus = await Campus.findByPk(req.params.id)
+    await campus.destroy(req.params.id);
+    res.send(campus);
+  } catch (error) {
+    next(error);
+  }
+})
 
 module.exports = router

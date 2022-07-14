@@ -37,4 +37,15 @@ router.post('/', async (req, res, next) => {
   }
 });
 
+//DETELE to remove student
+router.delete('/:id', async (req, res, next) => {
+  try {
+    const student = await Student.findByPk(req.params.id)
+    await student.destroy(req.params.id);
+    res.send(student);
+  } catch (error) {
+    next(error);
+  }
+})
+
 module.exports = router;

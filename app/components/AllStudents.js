@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { fetchStudents } from "../redux/students";
 import { Route, Link } from "react-router-dom";
 import AddStudent from './AddStudent'
+import RemoveStudent from './RemoveStudent'
 
 // Notice that we're exporting the AllStudents component twice. The named export
 // (below) is not connected to Redux, while the default export (at the very
@@ -42,7 +43,7 @@ export class AllStudents extends React.Component {
             <th>Photo:</th>
             <th>GPA:</th>
           </tr>
-          {/* write a map function for each of the campuses */}
+          
           {students.map((element) => {
             if (students.length == 0){
               return (
@@ -50,6 +51,7 @@ export class AllStudents extends React.Component {
               )} else {
             return (
               <tr key={element.firstName}>
+                <th><RemoveStudent id={element.id}/></th>
                 <th><Link to={`/students/${element.id}`}>{element.firstName}</Link></th>
                 <th><Link to={`/students/${element.id}`}>{element.lastName}</Link></th>
                 <th><Link to={`/students/${element.id}`}>{element.email}</Link></th>
