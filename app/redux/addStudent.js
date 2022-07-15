@@ -12,9 +12,7 @@ export const addStudent = (studentInReducer) => {
 export const createStudent = (student) => {
   return async (dispatch) => {
     try {
-        console.log(student)
       const { data } = await axios.post(`/api/students`, student);
-      
       dispatch(addStudent(data));
     } catch (err) {
       console.log(err);

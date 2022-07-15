@@ -9,8 +9,12 @@ import RemoveStudent from './RemoveStudent'
 // (below) is not connected to Redux, while the default export (at the very
 // bottom) is connected to Redux. Our tests should cover _both_ cases.
 export class AllStudents extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    this.state = {
+      dummyCounter: 0 
+    };
+    this.changeState = this.changeState.bind(this)
   }
 
   componentDidMount() {
@@ -28,6 +32,11 @@ export class AllStudents extends React.Component {
     } catch (error) {
       console.log(error);
     }
+  }
+
+  changeState(){
+    this.props.load();
+    this.setState({dummyCounter: this.state.dummyCounter++})
   }
 
   render() {
@@ -57,13 +66,13 @@ export class AllStudents extends React.Component {
                 <th><Link to={`/students/${element.id}`}>{element.email}</Link></th>
                 <th><img src={element.imageUrl} style={{height:"100px", width: "100px"}} /></th>
                 <th>{element.gpa}</th>
-                <th><RemoveStudent id={element.id}/></th>
+                <th onClick={this.changeState}><RemoveStudent id={element.id}/></th>
               </tr> 
             )}
             })}
         </tbody>
       </table>
-      <AddStudent/>
+      <div onClick={this.changeState}><AddStudent/></div>
     </div>);
   }
 }

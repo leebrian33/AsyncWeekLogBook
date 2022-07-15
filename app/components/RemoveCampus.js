@@ -24,7 +24,7 @@ class RemoveCampus extends React.Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    delete: (id) => dispatch(deleteCampus(id)),
+  
   };
 };
 

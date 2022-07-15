@@ -6,6 +6,13 @@ import EditStudent from './EditStudent'
 import { fetchSingleStudent } from "../redux/singleStudent";
 
 class SingleStudent extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      dummyCounter: 0 
+    };
+    this.changeState = this.changeState.bind(this)
+  }
   componentDidMount() {
     try {
       const studentId = this.props.match.params.studentId;
@@ -13,6 +20,12 @@ class SingleStudent extends Component {
     } catch (error) {
       console.error(error);
     }
+  }
+
+  changeState(){
+    const studentId = this.props.match.params.studentId;
+      this.props.loadSingleStudent(studentId);
+    this.setState({dummyCounter: this.state.dummyCounter++})
   }
 
   render() {
@@ -24,13 +37,14 @@ class SingleStudent extends Component {
         <div id="single-student">
           <h1>{OneStudent.firstName} {OneStudent.lastName}</h1>
           <h2>{OneStudent.description}</h2>
+          <p>{OneStudent.email}</p>
           <p>{OneStudent.gpa}</p>
           <img
             src={OneStudent.imageUrl}
             style={{ height: "200px", width: "200px" }}
           />
         </div>
-        <div><EditStudent id={OneStudent.id}/></div>
+        <div onClick={this.changeState}><EditStudent id={OneStudent.id}/></div>
         {!OneCampus.id ? <h3>NOT ATTENDING SCHOOL</h3> : <div id={OneCampus.id}>
           <div id="single-campus">
           <Link to={`/campuses/${OneCampus.id}`}><h1>{OneCampus.name}</h1></Link>

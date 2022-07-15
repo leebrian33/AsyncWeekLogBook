@@ -54,9 +54,9 @@ export const removeStudentFromCampus = (studentToBeUnregistered) => {
 export const unregisterStudent = (student) => {
   return async (dispatch) => {
     try {
-      let campusIdSpecific = {...student, route: unregister}
-      const { data } = await axios.put(`/api/students/${student.id}`, campusIdSpecific);
-      dispatch(removeStudent(data));
+      let campusIdSpecific = {...student, route: 'unregister'}
+      await axios.put(`/api/students/${student.id}`, campusIdSpecific);
+      dispatch(removeStudentFromCampus(student));
     } catch (err) {
       console.log(err);
     }
@@ -92,11 +92,12 @@ export default function studentsReducer(state = initialState, action) {
         (student) => student.id !== action.studentToBeDeleted
       );
     case UNREGISTER_STUDENT:
-      return state.map((student) =>
-        student.id === action.studentToBeUnregistered.id
-          ? action.studentToBeUnregistered
-          : student
-      );
+      return state.map((student) =>{
+        if (student.campusId === action.studentToBeUnregistered.campusId){
+          return student
+        }
+          
+  });
     case UPDATE_STUDENT:
     return state.map((student) =>
       student.id === action.studentToBeEdited.id

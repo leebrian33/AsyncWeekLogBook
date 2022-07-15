@@ -25,18 +25,18 @@ export const fetchCampuses = () => {
   };
 };
 //ACTION CREATOR: REMOVE A CAMPUS
-export const removeCampus = (campusToBeDeleted) => {
+export const removeCampus = (id) => {
   return {
     type: DELETE_CAMPUS,
-    campusToBeDeleted,
+    id,
   };
 };
 //THUNK: DELETE REQUEST
 export const deleteCampus = (id) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.delete(`/api/campuses/${id}`);
-      dispatch(removeCampus(data));
+      await axios.delete(`/api/campuses/${id}`);
+      dispatch(removeCampus(id));
     } catch (err) {
       console.log(err);
     }
@@ -52,7 +52,6 @@ export const reformCampus = (campusToBeUpdated) => {
 //THUNK: PUT REQUEST
 export const updateCampus = (campus) => {
   return async (dispatch) => {
-    console.log(campus)
     const { data } = await axios.put(`/api/campuses/${campus.id}`, campus);
     dispatch(reformCampus(data));
   };
@@ -64,7 +63,7 @@ export default function campusesReducer(state = initialState, action) {
     case SET_CAMPUSES:
       return action.campuses;
     case DELETE_CAMPUS:
-      return state.filter((campus) => campus.id !== action.campusToBeDeleted);
+      return state.filter((campus) => campus.id !== action.id);
     case UPDATE_CAMPUS:
       return state.map((campus) =>
         campus.id === action.campusToBeUpdated.id ? action.campusToBeUpdated : campus
