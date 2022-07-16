@@ -10,10 +10,7 @@ export class AllCampuses extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      dummyCounter: 0 
     };
-    this.changeState = this.changeState.bind(this)
-   
   }
 
   componentDidMount() {
@@ -33,11 +30,6 @@ export class AllCampuses extends React.Component {
       }
   }
 
-  changeState(){
-    this.props.load();
-    //force the page to re-render
-    this.setState({dummyCounter: this.state.dummyCounter++})
-  }
   render() {
     const { campuses } = this.props.campuses || [];
     return (
@@ -62,7 +54,7 @@ export class AllCampuses extends React.Component {
             })}
       
     
-        <div onClick={this.changeState}>
+        <div >
           <AddCampus />
         </div>
       </div>

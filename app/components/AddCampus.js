@@ -1,7 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Route, Link } from "react-router-dom";
-import { createCampus } from '../redux/addCampus'
+import { createCampus } from '../redux/campuses'
 
 
 class AddCampus extends React.Component {

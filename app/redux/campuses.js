@@ -5,6 +5,8 @@ let initialState = [];
 let SET_CAMPUSES = "SET_CAMPUSES";
 let DELETE_CAMPUS = "DELETE_CAMPUS";
 let UPDATE_CAMPUS = "UPDATE_CAMPUS";
+const ADD_CAMPUS = "ADD_CAMPUS";
+
 
 //ACTION CREATOR: SET ALL CAMPUSES
 export const setCampuses = (campuses) => {
@@ -19,6 +21,24 @@ export const fetchCampuses = () => {
     try {
       const { data } = await axios.get("/api/campuses");
       dispatch(setCampuses(data));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
+//ADD CAMPUS
+export const addCampus = (campusInReducer) => {
+  return {
+    type: ADD_CAMPUS,
+    campusInReducer,
+  };
+};
+//THUNK ADD CAMPUS
+export const createCampus = (campus) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.post(`/api/campuses`, campus);
+      dispatch(addCampus(data));
     } catch (err) {
       console.log(err);
     }
@@ -62,6 +82,8 @@ export default function campusesReducer(state = initialState, action) {
   switch (action.type) {
     case SET_CAMPUSES:
       return action.campuses;
+    case ADD_CAMPUS:
+      return [...state, action.campusInReducer]
     case DELETE_CAMPUS:
       return state.filter((campus) => campus.id !== action.id);
     case UPDATE_CAMPUS:

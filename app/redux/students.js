@@ -6,6 +6,7 @@ let SET_STUDENTS = "SET_STUDENTS";
 let DELETE_STUDENT = "DELETE_STUDENT";
 let UNREGISTER_STUDENT = "UNREGISTER_STUDENT";
 let UPDATE_STUDENT = "UPDATE_STUDENT"
+const ADD_STUDENT = "ADD_STUDENT";
 
 //ACTION CREATOR: SET ALL STUDENTS
 export const setStudents = (students) => {
@@ -25,19 +26,37 @@ export const fetchStudents = () => {
     }
   };
 };
+//ADD STUDENT ACTION CREATOR
+export const addStudent = (studentInReducer) => {
+  return {
+    type: ADD_STUDENT,
+    studentInReducer,
+  };
+};
+//THUNK ADD NEW STUDENT
+export const createStudent = (student) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.post(`/api/students`, student);
+      dispatch(addStudent(data));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
 //ACTION CREATOR: REMOVE A STUDENT
-export const removeStudent = (studentToBeDeleted) => {
+export const removeStudent = (id) => {
   return {
     type: DELETE_STUDENT,
-    studentToBeDeleted,
+    id,
   };
 };
 //THUNK: DELETE REQUEST
 export const deleteStudent = (id) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.delete(`/api/students/${id}`);
-      dispatch(removeStudent(data));
+      await axios.delete(`/api/students/${id}`);
+      dispatch(removeStudent(id));
     } catch (err) {
       console.log(err);
     }
@@ -87,9 +106,11 @@ export default function studentsReducer(state = initialState, action) {
   switch (action.type) {
     case SET_STUDENTS:
       return action.students;
+     case ADD_STUDENT:
+      return [...state, action.studentInReducer]
     case DELETE_STUDENT:
       return state.filter(
-        (student) => student.id !== action.studentToBeDeleted
+        (student) => student.id !== action.id
       );
     case UNREGISTER_STUDENT:
       return state.map((student) =>{
