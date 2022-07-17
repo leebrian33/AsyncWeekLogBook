@@ -51,3 +51,6 @@ Well before the deadline, we recommend practicing this by recording a very short
 - Requirements score (70%)
 - Rubric score (30%)
 - Extra credit (15% max)
+
+
+VIDEO: https://youtu.be/O_kZ9_OVhFk
