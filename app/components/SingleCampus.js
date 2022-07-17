@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import EditCampus from './EditCampus';
 
 import { fetchSingleCampus } from "../redux/singleCampus";
-import { unregisterStudent } from '../redux/students'
+import { unregisterStudent } from '../redux/singleCampus'
 
 class SingleCampus extends Component {
   constructor(props) {
@@ -27,13 +27,12 @@ class SingleCampus extends Component {
   changeState(){
     const campusId = this.props.match.params.campusId;
     this.props.loadSingleCampus(campusId);
-
     this.setState({dummyCounter: this.state.dummyCounter++})
   }
 
   render() {
 
-    const OneCampus = this.props.singleCampus; 
+    const OneCampus = this.props.singleCampus || {}; 
     
     const persons = this.props.students || [];
     return (
@@ -49,7 +48,7 @@ class SingleCampus extends Component {
         </div>
         <div onClick={this.changeState}><EditCampus id={OneCampus.id}/></div>
         
-        <div id="students-assigned">
+        <div id="students-assigned" onClick={this.changeState}>
           {persons.length!==0 ? <table>
             <tbody>
               <tr>
@@ -65,7 +64,7 @@ class SingleCampus extends Component {
                   return <h1>No Students</h1>;
                 } else {
                   return (
-                    <tr key={element.firstName}>
+                    <tr key={element.firstName} >
                       <th>
                         <Link to={`/students/${element.id}`}>
                           {element.firstName}
@@ -91,10 +90,10 @@ class SingleCampus extends Component {
                       {/* TIER 5 UNREGISTER BUTTON */}
                       <th><button
                             onClick={() => {
-                              console.log(this.props.students)
-                              this.props.stripStudent({...element, campusId:null})
-                              this.changeState()
-                              console.log(this.props.students)}
+                              
+                              this.props.stripStudent({...element, campusId: null},this.props.match.params.campusId)
+                          
+                              this.changeState()}
                             }
                           >
                             UNREGISTER THIS STUDENT
@@ -122,7 +121,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     loadSingleCampus: (id) => dispatch(fetchSingleCampus(id)),
-    stripStudent: (student) => dispatch(unregisterStudent(student), fetchSingleCampus())
+    stripStudent: (student,id) => dispatch(unregisterStudent(student,id), fetchSingleCampus(id))
   };
 };
 
